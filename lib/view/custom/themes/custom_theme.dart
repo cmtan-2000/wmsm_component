@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 final customTheme = ThemeData(
   primaryColor: Colors.green,
   accentColor: Colors.orange,
+  indicatorColor: const Color(0x00ffea5a), // cant work
   fontFamily: 'Roboto',
   textTheme: const TextTheme(
     headline1: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),

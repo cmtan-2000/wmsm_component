@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends ElevatedButton {
-  const CustomElevatedButton({
+  CustomElevatedButton({
+    required BuildContext context,
     Key? key,
     required VoidCallback onPressed,
     required Widget child,
@@ -12,7 +13,8 @@ class CustomElevatedButton extends ElevatedButton {
   }) : super(
           key: key,
           onPressed: onPressed,
-          style: style,
+          style:
+              ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
           focusNode: focusNode,
           autofocus: autofocus,
           clipBehavior: clipBehavior ?? Clip.none,

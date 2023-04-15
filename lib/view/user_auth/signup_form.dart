@@ -20,12 +20,11 @@ class _WidgetSignUpState extends State<WidgetSignUp> {
       children: [
         const Text("Don't have an account? "),
         CustomTextButton(
-          text: 'Sign up',
-          context: context,
           onPressed: () {},
           textStyle: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
+          child: const Text('Sign Up'),
         ),
       ],
     );

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 class CustomTextButton extends TextButton {
   CustomTextButton({
-    required BuildContext context,
     Key? key,
     required VoidCallback onPressed,
-    String? text,
+    required Widget child,
     TextStyle? textStyle,
     Color? backgroundColor,
     Color? foregroundColor,
@@ -13,9 +12,7 @@ class CustomTextButton extends TextButton {
   }) : super(
           key: key,
           onPressed: onPressed,
-          child: Text(
-            text ?? 'Default',
-          ),
+          child: child,
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
                 backgroundColor ?? Colors.transparent),

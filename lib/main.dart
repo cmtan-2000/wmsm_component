@@ -44,13 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => UserViewModel())],
-      child: MaterialApp(
-        title: 'My App',
-        theme: customTheme,
-        initialRoute: '/',
-        routes: routes,
-      ),
-    );
+        providers: [ChangeNotifierProvider(create: (_) => UserViewModel())],
+        child: MaterialApp(
+          title: 'Wellness',
+          theme: customTheme,
+          initialRoute: '/',
+          routes: routes,
+        ));
   }
 }

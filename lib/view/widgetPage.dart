@@ -1,9 +1,11 @@
-// ignore_for_file: file_names, avoid_print
+// ignore_for_file: file_names, avoid_print, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:wmsm_component/view/custom/widgets/custom_card.dart';
+import 'package:wmsm_component/view/custom/widgets/custom_elevatedbutton.dart';
 import 'package:wmsm_component/view/shared/card_percent_indicator.dart';
 
+import 'custom/widgets/custom_alertdialog.dart';
 import 'custom/widgets/custom_button.dart';
 import 'custom/widgets/custom_textformfield.dart';
 
@@ -15,24 +17,26 @@ class WidgetPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Widget Page')),
+      appBar: AppBar(
+        title: const Text('Widget Page'),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
             height: 10,
           ),
           CustomTextButton(
             onPressed: () => print('test'),
-            context: context,
+            child: Text('button_1'),
           ),
           const SizedBox(
             height: 10,
           ),
           CustomTextButton(
             onPressed: () => print('test'),
-            text: "test",
-            context: context,
+            child: Text('button_2'),
           ),
           const SizedBox(
             height: 10,
@@ -42,6 +46,10 @@ class WidgetPage extends StatelessWidget {
             hintText: 'Test',
             isNumberOnly: true,
             context: context,
+          ),
+          Text(
+            'Card Percent Indicator',
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           Row(
             children: const <Widget>[
@@ -62,7 +70,38 @@ class WidgetPage extends StatelessWidget {
                 fontsize: 20,
               )
             ],
-          )
+          ),
+          Text(
+            'Custome Alert Dialog Box',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          CustomElevatedButton(
+            context: context,
+            onPressed: () => showDialog(
+              context: context,
+              builder: (BuildContext context) => CustomAlertDialog(
+                context: context,
+                maxWidthDialog: 0.9,
+                icon: Icon(
+                  Icons.abc_outlined,
+                  size: 90,
+                ),
+                title: Text('Unable to sync data'),
+                contentBody: Text(
+                  'There seems to be not data on your health app. Please update the data on your health app, Etiqa+ will auto sync your health app data.',
+                ),
+                onCancel: () {
+                  Navigator.of(context).pop();
+                },
+                onConfirm: () {
+                  print('test');
+                },
+                toColumn: true,
+                toExpanded: true,
+              ),
+            ),
+            child: const Text('Click_alertDialog_box'),
+          ),
         ],
       ),
     );

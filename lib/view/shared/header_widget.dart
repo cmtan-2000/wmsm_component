@@ -110,7 +110,7 @@ class header_widget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
             )
-            .padding(horizontal: 20),
+            .paddingDirectional(horizontal: 20),
       ),
     ]);
   }

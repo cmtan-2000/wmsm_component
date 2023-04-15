@@ -75,7 +75,6 @@ class Intro extends StatelessWidget {
             <Widget>[
               Expanded(
                 child: CustomElevatedButton(
-                    context: context,
                     onPressed: () =>
                         Navigator.pushNamed(context, 'scenario_1/page_1'),
                     child: const Text("Next")),

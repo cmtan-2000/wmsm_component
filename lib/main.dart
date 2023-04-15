@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: MaterialApp(
           title: 'Wellness',
           theme: customTheme,
-          initialRoute: '/',
+          initialRoute: '/w',
           routes: routes,
         ));
   }

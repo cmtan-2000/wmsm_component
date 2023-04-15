@@ -7,4 +7,5 @@ Map<String, WidgetBuilder> routes = {
   '/': (context) => const Intro(),
   // '/profile': (context) => ProfileScreen(),
   'scenario_1/page_1': (context) => const page_1(),
+  '/w': (context) => WidgetPage()
 };

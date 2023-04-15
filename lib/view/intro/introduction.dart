@@ -77,6 +77,7 @@ class Intro extends StatelessWidget {
                 child: CustomElevatedButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, 'scenario_1/page_1'),
+                    context: context,
                     child: const Text("Next")),
               )
             ].toRow(mainAxisAlignment: MainAxisAlignment.center)

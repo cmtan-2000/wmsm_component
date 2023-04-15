@@ -69,9 +69,8 @@ class _WidgetSignInState extends State<WidgetSignIn> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               CustomTextButton(
-                context: context,
-                text: "Reset Password",
                 onPressed: () => print('Rest Password'),
+                child: const Text('Reset Password'),
               )
             ],
           ),
@@ -82,6 +81,7 @@ class _WidgetSignInState extends State<WidgetSignIn> {
             children: [
               Expanded(
                 child: CustomElevatedButton(
+                  context: context,
                   onPressed: () => authfunc.login(),
                   child: const Text('Login'),
                 ),

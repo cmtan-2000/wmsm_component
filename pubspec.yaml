@@ -39,6 +39,7 @@ dependencies:
   pin_code_fields: ^7.4.0
   styled_widget: ^0.4.1
   percent_indicator: ^4.2.3
+  fl_chart: ^0.62.0
 
 
 

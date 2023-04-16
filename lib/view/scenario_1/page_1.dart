@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:wmsm_component/view/scenario_1/sleep.dart';
+import 'package:wmsm_component/view/scenario_1/steps_tab.dart';
 import 'package:wmsm_component/view/shared/card_percent_indicator.dart';
 import 'package:wmsm_component/view/shared/header_widget.dart';
 
@@ -54,43 +56,17 @@ class _page_1State extends State<page_1> with SingleTickerProviderStateMixin {
               thickness: 10,
             ).paddingDirectional(vertical: 20),
             <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey[200],
-                ),
-                child: TabBar(
-                  controller: _tabController,
-                  indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black,
-                  ),
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.grey[600],
-                  tabs: <Widget>[
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: const Tab(
-                        text: "Steps",
-                      ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: const Tab(
-                        text: "Sleep",
-                      ),
-                    ),
-                  ],
-                ),
-              ).height(40).padding(bottom: 30),
+              tab_bar(tabController: _tabController)
+                  .height(40)
+                  .padding(bottom: 30),
               SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
                 child: TabBarView(
                   controller: _tabController,
                   children: const [
-                    Center(
-                      child: Text("Steps"),
-                    ),
-                    Placeholder(),
+                    steps_tab(),
+                    sleep_tab(),
                   ],
                 ),
               ),
@@ -98,15 +74,57 @@ class _page_1State extends State<page_1> with SingleTickerProviderStateMixin {
                 .toColumn(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: MainAxisSize.max,
                 )
                 .paddingDirectional(vertical: 10, horizontal: 20)
           ].toColumn(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
           ),
         ]),
+      ),
+    );
+  }
+}
+
+class tab_bar extends StatelessWidget {
+  const tab_bar({
+    super.key,
+    required TabController tabController,
+  }) : _tabController = tabController;
+
+  final TabController _tabController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.grey[200],
+      ),
+      child: TabBar(
+        controller: _tabController,
+        indicator: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.black,
+        ),
+        labelColor: Colors.white,
+        unselectedLabelColor: Colors.grey[600],
+        tabs: <Widget>[
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: const Tab(
+              text: "Steps",
+            ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: const Tab(
+              text: "Sleep",
+            ),
+          ),
+        ],
       ),
     );
   }

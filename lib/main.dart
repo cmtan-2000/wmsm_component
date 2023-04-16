@@ -46,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return MultiProvider(
         providers: [ChangeNotifierProvider(create: (_) => UserViewModel())],
         child: MaterialApp(
+        
           title: 'Wellness',
           theme: customTheme,
           initialRoute: '/',

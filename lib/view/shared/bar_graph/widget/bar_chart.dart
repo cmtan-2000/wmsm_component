@@ -17,9 +17,11 @@ class BarChartWidget extends StatelessWidget {
         saturdayY: weeklySummary[5],
         sundayY: weeklySummary[6]);
     weekBarData.initializeBarData();
+    double maxY = weekBarData.maxBarData();
+    
 
     return BarChart(BarChartData(
-      maxY: 1000,
+      maxY: maxY,
       minY: 0,
       gridData: FlGridData(show: false),
       borderData: FlBorderData(show: false),

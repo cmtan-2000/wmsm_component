@@ -24,7 +24,7 @@ class header_widget extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.20,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            color: Colors.lightBlue[100],
+            color: Colors.lightBlue[50],
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20),

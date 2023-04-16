@@ -33,4 +33,15 @@ class BarData {
     ];
     print(barData[0].y);
   }
+
+  double maxBarData() {
+    double max = 0;
+    for (int i = 0; i < barData.length; i++) {
+      if (barData[i].y > max) {
+        max = barData[i].y;
+      }
+    }
+    print(max);
+    return max;
+  }
 }

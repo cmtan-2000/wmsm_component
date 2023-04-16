@@ -98,14 +98,36 @@ class _steps_tabState extends State<steps_tab> {
           )
           .padding(bottom: 50),
       //Chart Here
-      SizedBox(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.4,
-        child: BarChartWidget(weeklySummary: weeklySteps),
+      Expanded(
+        child: SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height * 0.25,
+          child: BarChartWidget(weeklySummary: weeklySteps),
+        ).padding(bottom: 50),
+      ),
+      //Total and Average
+      <Widget>[
+        Text("Total Steps This Week").fontSize(15).fontWeight(FontWeight.bold),
+        Text("1000").fontSize(15).fontWeight(FontWeight.bold),
+      ].toRow(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      ),
+      Divider(
+        color: Colors.grey[400],
+      ).paddingDirectional(vertical: 20),
+      <Widget>[
+        Text("Average Daily Steps This Week")
+            .fontSize(15)
+            .fontWeight(FontWeight.bold),
+        Text("1000").fontSize(15).fontWeight(FontWeight.bold),
+      ].toRow(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
       )
     ].toColumn(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max);
+        mainAxisSize: MainAxisSize.min);
   }
 }

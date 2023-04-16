@@ -38,8 +38,9 @@ class _page_1State extends State<page_1> with SingleTickerProviderStateMixin {
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.white,
         appBar: AppBar(
+          
           foregroundColor: Colors.black,
-          backgroundColor: Colors.lightBlue[100],
+          backgroundColor: Colors.lightBlue[50],
           elevation: 0,
           title: const Text("Wellness"),
           centerTitle: true,
@@ -61,7 +62,7 @@ class _page_1State extends State<page_1> with SingleTickerProviderStateMixin {
                   .padding(bottom: 30),
               SizedBox(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height * 0.6,
                 child: TabBarView(
                   controller: _tabController,
                   children: const [

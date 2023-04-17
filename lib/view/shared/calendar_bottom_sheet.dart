@@ -12,17 +12,17 @@ class CalendarBottomSheet extends StatefulWidget {
 }
 
 class _CalendarBottomSheetState extends State<CalendarBottomSheet> {
-  late DateTime _selectedDay;
+  late DateTime today;
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = widget.today;
+    today = widget.today;
   }
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
-      _selectedDay = day;
+      today = day;
     });
   }
 
@@ -47,29 +47,59 @@ class _CalendarBottomSheetState extends State<CalendarBottomSheet> {
           ),
         ),
         availableGestures: AvailableGestures.all,
-        selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
-        focusedDay: _selectedDay,
-        firstDay: DateTime(2022),
-        lastDay: DateTime(2030),
+        selectedDayPredicate: (day) => isSameDay(day, today),
+        focusedDay: today,
+        firstDay: DateTime.utc(2010, 10, 16),
+        lastDay: lastDay(),
         onDaySelected: _onDaySelected,
       ),
       <Widget>[
-        CustomElevatedButton(
-            context: context,
-            onPressed: () {
-              Navigator.pop(context, null);
-            },
-            child: const Text("Cancel")),
-        CustomElevatedButton(
-            context: context,
-            onPressed: () {
-              Navigator.pop(context, _selectedDay);
-            },
-            child: const Text("Confirm")),
-      ].toRow(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      )
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: CustomElevatedButton(
+              context: context,
+              onPressed: () {
+                Navigator.pop(context, null);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+              ),
+              child: const Text("Cancel",
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.black,
+                      fontSize: 16))),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: CustomElevatedButton(
+              context: context,
+              onPressed: () {
+                Navigator.pop(context, today);
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: Colors.yellow[500],
+              ),
+              child: const Text("Confirm",
+                  style: TextStyle(color: Colors.black, fontSize: 16))),
+        ),
+      ]
+          .toRow(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          )
+          .padding(top: 20)
     ].toColumn();
   }
+}
+
+DateTime lastDay() {
+  DateTime now = DateTime.now();
+  int daysUntilSunday = 7 - now.weekday;
+  DateTime endOfWeek = now.add(Duration(days: daysUntilSunday));
+  return endOfWeek;
 }

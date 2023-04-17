@@ -13,8 +13,7 @@ class CustomElevatedButton extends ElevatedButton {
   }) : super(
           key: key,
           onPressed: onPressed,
-          style:
-              ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+          style: style,
           focusNode: focusNode,
           autofocus: autofocus,
           clipBehavior: clipBehavior ?? Clip.none,

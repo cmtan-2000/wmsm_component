@@ -2,106 +2,125 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:wmsm_component/view/shared/bar_graph/model/bar_data.dart';
 
-class BarChartWidget extends StatelessWidget {
+class BarChartWidget extends StatefulWidget {
   final List weeklySummary;
-  const BarChartWidget({super.key, required this.weeklySummary});
+  final int todayDay;
+  const BarChartWidget(
+      {super.key, required this.weeklySummary, required this.todayDay});
+
+  @override
+  State<BarChartWidget> createState() => _BarChartWidgetState();
+}
+
+class _BarChartWidgetState extends State<BarChartWidget> {
+  int get dayToday => widget.todayDay;
 
   @override
   Widget build(BuildContext context) {
     BarData weekBarData = BarData(
-        mondayY: weeklySummary[0],
-        tuesdayY: weeklySummary[1],
-        wednesdayY: weeklySummary[2],
-        thursdayY: weeklySummary[3],
-        fridayY: weeklySummary[4],
-        saturdayY: weeklySummary[5],
-        sundayY: weeklySummary[6]);
+        mondayY: widget.weeklySummary[0],
+        tuesdayY: widget.weeklySummary[1],
+        wednesdayY: widget.weeklySummary[2],
+        thursdayY: widget.weeklySummary[3],
+        fridayY: widget.weeklySummary[4],
+        saturdayY: widget.weeklySummary[5],
+        sundayY: widget.weeklySummary[6]);
     weekBarData.initializeBarData();
     double maxY = weekBarData.maxBarData();
-    
-
-    return BarChart(BarChartData(
-      maxY: maxY,
-      minY: 0,
-      gridData: FlGridData(show: false),
-      borderData: FlBorderData(show: false),
-      titlesData: FlTitlesData(
-        show: true,
-        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        bottomTitles: AxisTitles(
-          sideTitles:
-              SideTitles(showTitles: true, getTitlesWidget: bottomTitles),
+    return SizedBox(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.25,
+      child: BarChart(BarChartData(
+        maxY: maxY,
+        minY: 0,
+        gridData: FlGridData(show: false),
+        borderData: FlBorderData(show: false),
+        titlesData: FlTitlesData(
+          show: true,
+          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+                showTitles: true,
+                getTitlesWidget: bottomTitlesWithDayToday(dayToday)),
+          ),
         ),
-      ),
-      barTouchData: BarTouchData(
-        enabled: false,
-        touchTooltipData: BarTouchTooltipData(
-          tooltipBgColor: Colors.transparent,
-          tooltipPadding: const EdgeInsets.all(0),
-          tooltipMargin: 8,
-          getTooltipItem: (group, groupIndex, rod, rodIndex) {
-            return BarTooltipItem(
-              rod.toY.round().toString(),
-              TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
+        barTouchData: BarTouchData(
+          enabled: false,
+          touchTooltipData: BarTouchTooltipData(
+            tooltipBgColor: Colors.transparent,
+            tooltipPadding: const EdgeInsets.all(0),
+            tooltipMargin: 8,
+            getTooltipItem: (group, groupIndex, rod, rodIndex) {
+              return BarTooltipItem(
+                rod.toY.toString(),
+                TextStyle(
+                  color:
+                      rod.fromY == widget.todayDay ? Colors.black : Colors.grey,
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            },
+          ),
         ),
-      ),
-      barGroups: weekBarData.barData
-          .map(
-              (data) => BarChartGroupData(x: data.x, showingTooltipIndicators: [
-                    0
-                  ], barRods: [
-                    BarChartRodData(
-                      toY: data.y,
-                      color: Colors.yellow[200],
-                      width: 25,
-                      borderRadius: BorderRadius.circular(8),
-                      // backDrawRodData: BackgroundBarChartRodData(
-                      //   show: true,
-                      //   toY: 1000,
-                      // )
-                    )
-                  ]))
-          .toList(),
-    ));
+        barGroups: weekBarData.barData
+            .map((data) =>
+                BarChartGroupData(x: data.x, showingTooltipIndicators: [
+                  0
+                ], barRods: [
+                  BarChartRodData(
+                    toY: data.y,
+                    color: data.x.toInt() == widget.todayDay
+                        ? Colors.yellow[600]
+                        : Colors.grey[350],
+                    width: 25,
+                    borderRadius: BorderRadius.circular(8),
+                  )
+                ]))
+            .toList(),
+      )),
+    );
   }
 }
 
-Widget bottomTitles(double value, TitleMeta meta) {
+Widget Function(double, TitleMeta) bottomTitlesWithDayToday(int dayToday) {
+  return (value, meta) {
+    return bottomTitles(value, meta, dayToday);
+  };
+}
+
+Widget bottomTitles(double value, TitleMeta meta, int dayToday) {
   const style =
       TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 10);
 
+  const activeStyle =
+      TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 11);
   Widget title;
   switch (value.toInt()) {
     case 0:
-      title = const Text('M', style: style);
+      title = Text('M', style: dayToday == 0 ? activeStyle : style);
       break;
     case 1:
-      title = const Text('T', style: style);
+      title = Text('T', style: dayToday == 1 ? activeStyle : style);
       break;
     case 2:
-      title = const Text('W', style: style);
+      title = Text('W', style: dayToday == 2 ? activeStyle : style);
       break;
     case 3:
-      title = const Text('T', style: style);
+      title = Text('T', style: dayToday == 3 ? activeStyle : style);
       break;
     case 4:
-      title = const Text('F', style: style);
+      title = Text('F', style: dayToday == 4 ? activeStyle : style);
       break;
     case 5:
-      title = const Text('S', style: style);
+      title = Text('S', style: dayToday == 5 ? activeStyle : style);
       break;
     case 6:
-      title = const Text('S', style: style);
+      title = Text('S', style: dayToday == 6 ? activeStyle : style);
       break;
     default:
-      title = const Text('');
+      title = Text('');
   }
-  return SideTitleWidget(child: title, axisSide: meta.axisSide);
+  return SideTitleWidget(axisSide: meta.axisSide, child: title);
 }

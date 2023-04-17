@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:wmsm_component/view/custom/widgets/custom_elevatedbutton.dart';
+import 'package:intl/intl.dart';
+import 'package:styled_widget/styled_widget.dart';
 import 'package:wmsm_component/view/shared/bar_graph/widget/bar_chart.dart';
 import 'package:wmsm_component/view/shared/calendar_bottom_sheet.dart';
+import 'package:wmsm_component/viewmodel/steps/steps_service.dart';
 
 class steps_tab extends StatefulWidget {
   const steps_tab({super.key});
@@ -14,8 +14,34 @@ class steps_tab extends StatefulWidget {
 }
 
 class _steps_tabState extends State<steps_tab> {
+  final StepsServices stepsServices = StepsServices();
   DateTime today = DateTime.now();
-  List<double> weeklySteps = [5, 50, 550, 510, 30, 10, 20];
+  late List<double> weeklySteps;
+  late int todayDay;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeDateFormatting();
+    weeklySteps = stepsServices.getWeeklySteps(today);
+  }
+
+//SERVICES
+  String totalSteps() {
+    double total = 0;
+    for (var i = 0; i < weeklySteps.length; i++) {
+      total += weeklySteps[i];
+    }
+    return total.toStringAsFixed(0);
+  }
+
+  String averageSteps() {
+    double total = 0;
+    for (var i = 0; i < weeklySteps.length; i++) {
+      total += weeklySteps[i];
+    }
+    return (total / weeklySteps.length).toStringAsFixed(2);
+  }
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
@@ -39,7 +65,11 @@ class _steps_tabState extends State<steps_tab> {
       barrierColor: Colors.grey[800],
       context: context,
       builder: (BuildContext context) {
-        return CalendarBottomSheet(today: today);
+        return Flexible(
+          child: CalendarBottomSheet(
+            today: today,
+          ),
+        );
       },
     );
 
@@ -50,6 +80,22 @@ class _steps_tabState extends State<steps_tab> {
     }
   }
 
+  String getWeekDays(DateTime today) {
+    List<DateTime> weekDays = [];
+    DateTime firstDayOfThisWeek =
+        today.subtract(Duration(days: today.weekday - 1));
+    DateTime lastDayOfThisWeek = firstDayOfThisWeek.add(Duration(days: 6));
+    for (var i = 0; i < 7; i++) {
+      DateTime date = firstDayOfThisWeek.add(Duration(days: i));
+      weekDays.add(date);
+    }
+    setState(() {
+      todayDay = today.weekday - 1;
+    });
+
+    return "${weekDays[0].day}th - ${weekDays[6].day}th(${DateFormat('MMMM').format(weekDays[0])}${weekDays[0].year})";
+  }
+
   @override
   Widget build(BuildContext context) {
     return <Widget>[
@@ -58,7 +104,7 @@ class _steps_tabState extends State<steps_tab> {
           const Text("This week steps")
               .fontSize(20)
               .fontWeight(FontWeight.bold),
-          const Text("10th - 16th(April 2023)").fontSize(12),
+          Text(getWeekDays(today)).fontSize(12),
         ].toColumn(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -102,13 +148,13 @@ class _steps_tabState extends State<steps_tab> {
         child: SizedBox(
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.25,
-          child: BarChartWidget(weeklySummary: weeklySteps),
+          child: BarChartWidget(weeklySummary: weeklySteps, todayDay: todayDay),
         ).padding(bottom: 50),
       ),
       //Total and Average
       <Widget>[
         Text("Total Steps This Week").fontSize(15).fontWeight(FontWeight.bold),
-        Text("1000").fontSize(15).fontWeight(FontWeight.bold),
+        Text(totalSteps()).fontSize(15).fontWeight(FontWeight.bold),
       ].toRow(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,7 +166,7 @@ class _steps_tabState extends State<steps_tab> {
         Text("Average Daily Steps This Week")
             .fontSize(15)
             .fontWeight(FontWeight.bold),
-        Text("1000").fontSize(15).fontWeight(FontWeight.bold),
+        Text(averageSteps()).fontSize(15).fontWeight(FontWeight.bold),
       ].toRow(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

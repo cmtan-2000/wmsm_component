@@ -75,10 +75,13 @@ class Intro extends StatelessWidget {
             <Widget>[
               Expanded(
                 child: CustomElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow[600], elevation: 0),
                     context: context,
                     onPressed: () =>
                         Navigator.pushNamed(context, 'scenario_1/page_1'),
-                    child: const Text("Next")),
+                    child: const Text("Next",
+                        style: TextStyle(color: Colors.black))),
               )
             ].toRow(mainAxisAlignment: MainAxisAlignment.center)
           ]

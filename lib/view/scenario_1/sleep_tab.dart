@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:wmsm_component/view/shared/bar_graph/widget/bar_chart.dart';
 import 'package:wmsm_component/view/shared/calendar_bottom_sheet.dart';
+import 'package:wmsm_component/viewmodel/sleep/sleep_service.dart';
 
 class sleep_tab extends StatefulWidget {
   const sleep_tab({super.key});
@@ -13,8 +14,33 @@ class sleep_tab extends StatefulWidget {
 }
 
 class _sleep_tabState extends State<sleep_tab> {
+  final SleepServices sleepServices = SleepServices();
   DateTime today = DateTime.now();
-  List<double> weeklySleep = [5, 6, 8, 8.6, 8.7, 7, 8];
+  late List<double> weeklySleep;
+  late int todayDay;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeDateFormatting();
+    weeklySleep = sleepServices.getWeeklySleep(today);
+  }
+
+  String totalSleep() {
+    double total = 0;
+    for (var i = 0; i < weeklySleep.length; i++) {
+      total += weeklySleep[i];
+    }
+    return "${total}hours";
+  }
+
+  String averageSleep() {
+    double total = 0;
+    for (var i = 0; i < weeklySleep.length; i++) {
+      total += weeklySleep[i];
+    }
+    return "${(total / weeklySleep.length).toStringAsFixed(2)}hours";
+  }
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
@@ -38,7 +64,9 @@ class _sleep_tabState extends State<sleep_tab> {
       barrierColor: Colors.grey[800],
       context: context,
       builder: (BuildContext context) {
-        return CalendarBottomSheet(today: today);
+        return CalendarBottomSheet(
+          today: today,
+        );
       },
     );
 
@@ -49,15 +77,31 @@ class _sleep_tabState extends State<sleep_tab> {
     }
   }
 
+  String getWeekDays(DateTime today) {
+    List<DateTime> weekDays = [];
+    DateTime firstDayOfThisWeek =
+        today.subtract(Duration(days: today.weekday - 1));
+    DateTime lastDayOfThisWeek = firstDayOfThisWeek.add(Duration(days: 6));
+    for (var i = 0; i < 7; i++) {
+      DateTime date = firstDayOfThisWeek.add(Duration(days: i));
+      weekDays.add(date);
+    }
+    setState(() {
+      todayDay = today.weekday - 1;
+    });
+
+    return "${weekDays[0].day}th - ${weekDays[6].day}th(${DateFormat('MMMM').format(weekDays[0])}${weekDays[0].year})";
+  }
+
   @override
   Widget build(BuildContext context) {
     return <Widget>[
       <Widget>[
         <Widget>[
-          const Text("This week steps")
+          const Text("This week sleeps")
               .fontSize(20)
               .fontWeight(FontWeight.bold),
-          const Text("10th - 16th(April 2023)").fontSize(12),
+          Text(getWeekDays(today)).fontSize(12),
         ].toColumn(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -101,13 +145,14 @@ class _sleep_tabState extends State<sleep_tab> {
         child: SizedBox(
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.25,
-          child: BarChartWidget(weeklySummary: weeklySleep),
-        ).padding(bottom: 50),
+          child: BarChartWidget(weeklySummary: weeklySleep, todayDay: todayDay)
+              .padding(bottom: 50),
+        ),
       ),
       //Total and Average
       <Widget>[
-        Text("Total Steps This Week").fontSize(15).fontWeight(FontWeight.bold),
-        Text("1000").fontSize(15).fontWeight(FontWeight.bold),
+        Text("Total Sleep This Week").fontSize(15).fontWeight(FontWeight.bold),
+        Text(totalSleep()).fontSize(15).fontWeight(FontWeight.bold),
       ].toRow(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,14 +161,14 @@ class _sleep_tabState extends State<sleep_tab> {
         color: Colors.grey[400],
       ).paddingDirectional(vertical: 20),
       <Widget>[
-        Text("Average Daily Steps This Week")
+        Text("Average Daily Sleep This Week")
             .fontSize(15)
             .fontWeight(FontWeight.bold),
-        Text("1000").fontSize(15).fontWeight(FontWeight.bold),
+        Text(averageSleep()).fontSize(15).fontWeight(FontWeight.bold),
       ].toRow(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      )
+      ),
     ].toColumn(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

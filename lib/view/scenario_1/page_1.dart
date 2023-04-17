@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:wmsm_component/view/scenario_1/sleep.dart';
+import 'package:wmsm_component/view/scenario_1/sleep_tab.dart';
 import 'package:wmsm_component/view/scenario_1/steps_tab.dart';
 import 'package:wmsm_component/view/shared/card_percent_indicator.dart';
 import 'package:wmsm_component/view/shared/header_widget.dart';
@@ -20,7 +20,7 @@ class _page_1State extends State<page_1> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(initialIndex: 1, length: 2, vsync: this);
   }
 
   @override
@@ -38,7 +38,6 @@ class _page_1State extends State<page_1> with SingleTickerProviderStateMixin {
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.white,
         appBar: AppBar(
-          
           foregroundColor: Colors.black,
           backgroundColor: Colors.lightBlue[50],
           elevation: 0,
@@ -65,9 +64,9 @@ class _page_1State extends State<page_1> with SingleTickerProviderStateMixin {
                 height: MediaQuery.of(context).size.height * 0.6,
                 child: TabBarView(
                   controller: _tabController,
-                  children: const [
-                    steps_tab(),
-                    sleep_tab(),
+                  children: [
+                    const steps_tab().padding(bottom: 20),
+                    const sleep_tab().padding(bottom: 20),
                   ],
                 ),
               ),

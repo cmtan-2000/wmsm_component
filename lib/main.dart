@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.yellow,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -46,7 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return MultiProvider(
         providers: [ChangeNotifierProvider(create: (_) => UserViewModel())],
         child: MaterialApp(
-        
           title: 'Wellness',
           theme: customTheme,
           initialRoute: '/',

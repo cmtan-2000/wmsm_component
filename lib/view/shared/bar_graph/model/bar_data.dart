@@ -31,7 +31,6 @@ class BarData {
       IndividualBar(5, saturdayY),
       IndividualBar(6, sundayY),
     ];
-    print(barData[0].y);
   }
 
   double maxBarData() {
@@ -41,7 +40,6 @@ class BarData {
         max = barData[i].y;
       }
     }
-    print(max);
     return max;
   }
 }

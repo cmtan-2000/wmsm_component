@@ -52,23 +52,21 @@ class _steps_tabState extends State<steps_tab> {
   void _calendarSelector(BuildContext context) async {
     final selectedDay = await showModalBottomSheet<DateTime>(
       isScrollControlled: true,
+      isDismissible: true,
+      useSafeArea: true,
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.6,
       ),
-      useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
       ),
-      isDismissible: true,
       barrierColor: Colors.grey[800],
       context: context,
       builder: (BuildContext context) {
-        return Flexible(
-          child: CalendarBottomSheet(
-            today: today,
-          ),
+        return CalendarBottomSheet(
+          today: today,
         );
       },
     );
@@ -84,7 +82,7 @@ class _steps_tabState extends State<steps_tab> {
     List<DateTime> weekDays = [];
     DateTime firstDayOfThisWeek =
         today.subtract(Duration(days: today.weekday - 1));
-    DateTime lastDayOfThisWeek = firstDayOfThisWeek.add(Duration(days: 6));
+    DateTime lastDayOfThisWeek = firstDayOfThisWeek.add(const Duration(days: 6));
     for (var i = 0; i < 7; i++) {
       DateTime date = firstDayOfThisWeek.add(Duration(days: i));
       weekDays.add(date);
@@ -153,7 +151,7 @@ class _steps_tabState extends State<steps_tab> {
       ),
       //Total and Average
       <Widget>[
-        Text("Total Steps This Week").fontSize(15).fontWeight(FontWeight.bold),
+        const Text("Total Steps This Week").fontSize(15).fontWeight(FontWeight.bold),
         Text(totalSteps()).fontSize(15).fontWeight(FontWeight.bold),
       ].toRow(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +161,7 @@ class _steps_tabState extends State<steps_tab> {
         color: Colors.grey[400],
       ).paddingDirectional(vertical: 20),
       <Widget>[
-        Text("Average Daily Steps This Week")
+        const Text("Average Daily Steps This Week")
             .fontSize(15)
             .fontWeight(FontWeight.bold),
         Text(averageSteps()).fontSize(15).fontWeight(FontWeight.bold),

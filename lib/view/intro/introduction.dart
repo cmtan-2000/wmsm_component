@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:wmsm_component/view/custom/widgets/custom_elevatedbutton.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Intro extends StatelessWidget {
   const Intro({super.key});
@@ -22,9 +23,9 @@ class Intro extends StatelessWidget {
         child: SafeArea(
           child: <Widget>[
             Center(
-              child: Image.asset(
+              child: SvgPicture.asset(
                 fit: BoxFit.cover,
-                'assets/images/wearable_enlarge.png',
+                'assets/images/wearable.svg',
               ),
             ).padding(bottom: 20).height(200),
             const Text("Let's get healthier together")

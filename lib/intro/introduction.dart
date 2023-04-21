@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:wmsm_component/view/custom/widgets/custom_elevatedbutton.dart';
+import 'package:wmsm_component/custom/widgets/custom_elevatedbutton.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Intro extends StatelessWidget {

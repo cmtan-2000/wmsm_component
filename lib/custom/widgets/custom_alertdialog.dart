@@ -1,9 +1,8 @@
 // ignore_for_file: empty_constructor_bodies, prefer_const_constructors, overridden_fields, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
-import 'package:wmsm_component/view/custom/widgets/custom_button.dart';
-import 'package:wmsm_component/view/custom/widgets/custom_elevatedbutton.dart';
-
+import 'package:wmsm_component/custom/widgets/custom_button.dart';
+import 'package:wmsm_component/custom/widgets/custom_elevatedbutton.dart';
 class CustomAlertDialog extends AlertDialog {
   final BuildContext context;
   final double maxWidthDialog;

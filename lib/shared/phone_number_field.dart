@@ -1,7 +1,7 @@
 // ignore_for_file: camel_case_types, implementation_imports
 
 import 'package:flutter/material.dart';
-import '../custom/widgets/custom_textformfield.dart';
+import 'package:wmsm_component/custom/widgets/custom_textformfield.dart';
 
 // ignore: unused_element
 class phoneNumberField extends StatelessWidget {

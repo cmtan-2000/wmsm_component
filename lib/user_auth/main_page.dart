@@ -8,8 +8,6 @@ consist of:
 */
 
 import 'package:flutter/material.dart';
-
-import '../custom/widgets/custom_outlinedbutton.dart';
 import 'signin_form.dart';
 
 class MainPage extends StatelessWidget {

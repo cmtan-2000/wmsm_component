@@ -1,55 +1,5 @@
-// ignore_for_file: annotate_overrides, overridden_fields
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-// class CustomTextField extends StatelessWidget {
-//   final String hintText;
-//   final TextEditingController controller;
-//   final bool isNumberOnly;
-//   final int? maxNumberLength;
-//   final int? maxLines;
-
-//   const CustomTextField(
-//       {Key? key,
-//       required this.hintText,
-//       required this.controller,
-//       required this.isNumberOnly,
-//       this.maxNumberLength,
-//       this.maxLines})
-//       : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextFormField(
-//       controller: controller,
-//       keyboardType:
-//           isNumberOnly == true ? TextInputType.number : TextInputType.text,
-//       decoration: InputDecoration(
-//         hintText: hintText,
-//         // filled: true,
-//         // fillColor: Colors.grey[200],
-//         // border: OutlineInputBorder(
-//         //   borderRadius: BorderRadius.circular(8),
-//         //   borderSide: BorderSide.none,
-//         // ),
-//       ),
-//       validator: (val) {
-//         if (val == null || val.isEmpty || val.length < maxNumberLength!) {
-//           return 'Enter your $hintText';
-//         }
-//         return null;
-//       },
-//       maxLines: maxLines,
-//       inputFormatters: [
-//         isNumberOnly == true
-//             ? FilteringTextInputFormatter.digitsOnly
-//             : FilteringTextInputFormatter.singleLineFormatter,
-//       ],
-//       cursorColor: Theme.of(context).primaryColor,
-//     );
-//   }
-// }
 
 class CustomTextFormField extends TextFormField {
   CustomTextFormField({

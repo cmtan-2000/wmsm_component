@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:wmsm_component/view/shared/card_percent_indicator.dart';
+import 'package:wmsm_component/shared/card_percent_indicator.dart';
 
 class header_widget extends StatelessWidget {
   const header_widget({

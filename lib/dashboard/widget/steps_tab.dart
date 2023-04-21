@@ -2,44 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:wmsm_component/view/shared/bar_graph/widget/bar_chart.dart';
-import 'package:wmsm_component/view/shared/calendar_bottom_sheet.dart';
-import 'package:wmsm_component/viewmodel/sleep/sleep_service.dart';
+import 'package:wmsm_component/shared/bar_graph/widget/bar_chart.dart';
+import 'package:wmsm_component/shared/calendar_bottom_sheet.dart';
+import 'package:wmsm_component/dashboard/services/steps_service.dart';
 
-class sleep_tab extends StatefulWidget {
-  const sleep_tab({super.key});
+class StepsTab extends StatefulWidget {
+  const StepsTab({super.key});
 
   @override
-  State<sleep_tab> createState() => _sleep_tabState();
+  State<StepsTab> createState() => _steps_tabState();
 }
 
-class _sleep_tabState extends State<sleep_tab> {
-  final SleepServices sleepServices = SleepServices();
+class _steps_tabState extends State<StepsTab> {
+  final StepsServices stepsServices = StepsServices();
   DateTime today = DateTime.now();
-  late List<double> weeklySleep;
+  late List<double> weeklySteps;
   late int todayDay;
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting();
-    weeklySleep = sleepServices.getWeeklySleep(today);
+    weeklySteps = stepsServices.getWeeklySteps(today);
   }
 
-  String totalSleep() {
+//SERVICES
+  String totalSteps() {
     double total = 0;
-    for (var i = 0; i < weeklySleep.length; i++) {
-      total += weeklySleep[i];
+    for (var i = 0; i < weeklySteps.length; i++) {
+      total += weeklySteps[i];
     }
-    return "${total}hours";
+    return total.toStringAsFixed(0);
   }
 
-  String averageSleep() {
+  String averageSteps() {
     double total = 0;
-    for (var i = 0; i < weeklySleep.length; i++) {
-      total += weeklySleep[i];
+    for (var i = 0; i < weeklySteps.length; i++) {
+      total += weeklySteps[i];
     }
-    return "${(total / weeklySleep.length).toStringAsFixed(2)}hours";
+    return (total / weeklySteps.length).toStringAsFixed(2);
   }
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
@@ -51,16 +52,16 @@ class _sleep_tabState extends State<sleep_tab> {
   void _calendarSelector(BuildContext context) async {
     final selectedDay = await showModalBottomSheet<DateTime>(
       isScrollControlled: true,
+      isDismissible: true,
+      useSafeArea: true,
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.6,
       ),
-      useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
       ),
-      isDismissible: true,
       barrierColor: Colors.grey[800],
       context: context,
       builder: (BuildContext context) {
@@ -81,7 +82,7 @@ class _sleep_tabState extends State<sleep_tab> {
     List<DateTime> weekDays = [];
     DateTime firstDayOfThisWeek =
         today.subtract(Duration(days: today.weekday - 1));
-    DateTime lastDayOfThisWeek = firstDayOfThisWeek.add(Duration(days: 6));
+    DateTime lastDayOfThisWeek = firstDayOfThisWeek.add(const Duration(days: 6));
     for (var i = 0; i < 7; i++) {
       DateTime date = firstDayOfThisWeek.add(Duration(days: i));
       weekDays.add(date);
@@ -98,7 +99,7 @@ class _sleep_tabState extends State<sleep_tab> {
     return <Widget>[
       <Widget>[
         <Widget>[
-          const Text("This week sleeps")
+          const Text("This week steps")
               .fontSize(20)
               .fontWeight(FontWeight.bold),
           Text(getWeekDays(today)).fontSize(12),
@@ -145,14 +146,13 @@ class _sleep_tabState extends State<sleep_tab> {
         child: SizedBox(
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.25,
-          child: BarChartWidget(weeklySummary: weeklySleep, todayDay: todayDay)
-              .padding(bottom: 50),
-        ),
+          child: BarChartWidget(weeklySummary: weeklySteps, todayDay: todayDay),
+        ).padding(bottom: 50),
       ),
       //Total and Average
       <Widget>[
-        Text("Total Sleep This Week").fontSize(15).fontWeight(FontWeight.bold),
-        Text(totalSleep()).fontSize(15).fontWeight(FontWeight.bold),
+        const Text("Total Steps This Week").fontSize(15).fontWeight(FontWeight.bold),
+        Text(totalSteps()).fontSize(15).fontWeight(FontWeight.bold),
       ].toRow(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,14 +161,14 @@ class _sleep_tabState extends State<sleep_tab> {
         color: Colors.grey[400],
       ).paddingDirectional(vertical: 20),
       <Widget>[
-        Text("Average Daily Sleep This Week")
+        const Text("Average Daily Steps This Week")
             .fontSize(15)
             .fontWeight(FontWeight.bold),
-        Text(averageSleep()).fontSize(15).fontWeight(FontWeight.bold),
+        Text(averageSteps()).fontSize(15).fontWeight(FontWeight.bold),
       ].toRow(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      ),
+      )
     ].toColumn(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

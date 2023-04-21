@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:wmsm_component/view/custom/widgets/custom_card.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:wmsm_component/custom/widgets/custom_card.dart';
 
 class CardPercentIndicator extends StatelessWidget {
   const CardPercentIndicator({

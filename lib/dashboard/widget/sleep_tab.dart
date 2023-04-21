@@ -2,45 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:wmsm_component/view/shared/bar_graph/widget/bar_chart.dart';
-import 'package:wmsm_component/view/shared/calendar_bottom_sheet.dart';
-import 'package:wmsm_component/viewmodel/steps/steps_service.dart';
+import 'package:wmsm_component/dashboard/services/sleep_service.dart';
+import 'package:wmsm_component/shared/bar_graph/widget/bar_chart.dart';
+import 'package:wmsm_component/shared/calendar_bottom_sheet.dart';
 
-class steps_tab extends StatefulWidget {
-  const steps_tab({super.key});
+class SleepTab extends StatefulWidget {
+  const SleepTab({super.key});
 
   @override
-  State<steps_tab> createState() => _steps_tabState();
+  State<SleepTab> createState() => _sleep_tabState();
 }
 
-class _steps_tabState extends State<steps_tab> {
-  final StepsServices stepsServices = StepsServices();
+class _sleep_tabState extends State<SleepTab> {
+  final SleepServices sleepServices = SleepServices();
   DateTime today = DateTime.now();
-  late List<double> weeklySteps;
+  late List<double> weeklySleep;
   late int todayDay;
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting();
-    weeklySteps = stepsServices.getWeeklySteps(today);
+    weeklySleep = sleepServices.getWeeklySleep(today);
   }
 
-//SERVICES
-  String totalSteps() {
+  String totalSleep() {
     double total = 0;
-    for (var i = 0; i < weeklySteps.length; i++) {
-      total += weeklySteps[i];
+    for (var i = 0; i < weeklySleep.length; i++) {
+      total += weeklySleep[i];
     }
-    return total.toStringAsFixed(0);
+    return "${total}hours";
   }
 
-  String averageSteps() {
+  String averageSleep() {
     double total = 0;
-    for (var i = 0; i < weeklySteps.length; i++) {
-      total += weeklySteps[i];
+    for (var i = 0; i < weeklySleep.length; i++) {
+      total += weeklySleep[i];
     }
-    return (total / weeklySteps.length).toStringAsFixed(2);
+    return "${(total / weeklySleep.length).toStringAsFixed(2)}hours";
   }
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
@@ -52,16 +51,16 @@ class _steps_tabState extends State<steps_tab> {
   void _calendarSelector(BuildContext context) async {
     final selectedDay = await showModalBottomSheet<DateTime>(
       isScrollControlled: true,
-      isDismissible: true,
-      useSafeArea: true,
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.6,
       ),
+      useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
       ),
+      isDismissible: true,
       barrierColor: Colors.grey[800],
       context: context,
       builder: (BuildContext context) {
@@ -99,7 +98,7 @@ class _steps_tabState extends State<steps_tab> {
     return <Widget>[
       <Widget>[
         <Widget>[
-          const Text("This week steps")
+          const Text("This week sleeps")
               .fontSize(20)
               .fontWeight(FontWeight.bold),
           Text(getWeekDays(today)).fontSize(12),
@@ -146,13 +145,14 @@ class _steps_tabState extends State<steps_tab> {
         child: SizedBox(
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.25,
-          child: BarChartWidget(weeklySummary: weeklySteps, todayDay: todayDay),
-        ).padding(bottom: 50),
+          child: BarChartWidget(weeklySummary: weeklySleep, todayDay: todayDay)
+              .padding(bottom: 50),
+        ),
       ),
       //Total and Average
       <Widget>[
-        const Text("Total Steps This Week").fontSize(15).fontWeight(FontWeight.bold),
-        Text(totalSteps()).fontSize(15).fontWeight(FontWeight.bold),
+        const Text("Total Sleep This Week").fontSize(15).fontWeight(FontWeight.bold),
+        Text(totalSleep()).fontSize(15).fontWeight(FontWeight.bold),
       ].toRow(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,14 +161,14 @@ class _steps_tabState extends State<steps_tab> {
         color: Colors.grey[400],
       ).paddingDirectional(vertical: 20),
       <Widget>[
-        const Text("Average Daily Steps This Week")
+        const Text("Average Daily Sleep This Week")
             .fontSize(15)
             .fontWeight(FontWeight.bold),
-        Text(averageSteps()).fontSize(15).fontWeight(FontWeight.bold),
+        Text(averageSleep()).fontSize(15).fontWeight(FontWeight.bold),
       ].toRow(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      )
+      ),
     ].toColumn(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

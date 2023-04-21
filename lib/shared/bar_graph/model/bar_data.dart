@@ -1,4 +1,4 @@
-import 'package:wmsm_component/view/shared/bar_graph/model/inidividual_bar.dart';
+import 'package:wmsm_component/shared/bar_graph/model/inidividual_bar.dart';
 
 class BarData {
   final double mondayY;

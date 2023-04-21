@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'routes.dart';
-import 'view/custom/themes/custom_theme.dart';
-import 'viewmodel/user_view_model.dart';
+import 'package:wmsm_component/custom/themes/custom_theme.dart';
+import 'package:wmsm_component/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,23 +31,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => UserViewModel())],
-        child: MaterialApp(
-          title: 'Wellness',
-          theme: customTheme,
-          initialRoute: '/',
-          routes: routes,
-        ));
+    return MaterialApp(
+      title: 'Wellness',
+      theme: customTheme,
+      initialRoute: '/',
+      routes: routes,
+    );
   }
 }

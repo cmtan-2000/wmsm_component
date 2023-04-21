@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:wmsm_component/view/scenario_1/sleep_tab.dart';
-import 'package:wmsm_component/view/scenario_1/steps_tab.dart';
-import 'package:wmsm_component/view/shared/card_percent_indicator.dart';
-import 'package:wmsm_component/view/shared/header_widget.dart';
+import 'package:wmsm_component/dashboard/widget/sleep_tab.dart';
+import 'package:wmsm_component/dashboard/widget/steps_tab.dart';
+import 'package:wmsm_component/shared/card_percent_indicator.dart';
+import 'package:wmsm_component/shared/header_widget.dart';
 
 class page_1 extends StatefulWidget {
   const page_1({super.key});
@@ -65,8 +65,8 @@ class _page_1State extends State<page_1> with SingleTickerProviderStateMixin {
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    const steps_tab().padding(bottom: 20),
-                    const sleep_tab().padding(bottom: 20),
+                    const StepsTab().padding(bottom: 20),
+                    const SleepTab().padding(bottom: 20),
                   ],
                 ),
               ),

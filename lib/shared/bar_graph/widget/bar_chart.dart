@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:wmsm_component/view/shared/bar_graph/model/bar_data.dart';
+import 'package:wmsm_component/shared/bar_graph/model/bar_data.dart';
 
 class BarChartWidget extends StatefulWidget {
   final List weeklySummary;

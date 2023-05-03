@@ -7,14 +7,15 @@ import 'package:wmsm_component/dashboard/widget/steps_tab.dart';
 import 'package:wmsm_component/shared/card_percent_indicator.dart';
 import 'package:wmsm_component/shared/header_widget.dart';
 
-class page_1 extends StatefulWidget {
-  const page_1({super.key});
+class Dashboard extends StatefulWidget {
+  const Dashboard({super.key});
 
   @override
-  State<page_1> createState() => _page_1State();
+  State<Dashboard> createState() => dashboard_state();
 }
 
-class _page_1State extends State<page_1> with SingleTickerProviderStateMixin {
+class dashboard_state extends State<Dashboard>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override

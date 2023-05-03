@@ -26,6 +26,7 @@ class _BarChartWidgetState extends State<BarChartWidget> {
         saturdayY: widget.weeklySummary[5],
         sundayY: widget.weeklySummary[6]);
     weekBarData.initializeBarData();
+    weekBarData.initializeWeekStepCount();
     double maxY = weekBarData.maxBarData();
     return SizedBox(
       width: double.infinity,

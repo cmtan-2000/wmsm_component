@@ -43,12 +43,6 @@ class _steps_tabState extends State<StepsTab> {
     return (total / weeklySteps.length).toStringAsFixed(2);
   }
 
-  void _onDaySelected(DateTime day, DateTime focusedDay) {
-    setState(() {
-      today = day;
-    });
-  }
-
   void _calendarSelector(BuildContext context) async {
     final selectedDay = await showModalBottomSheet<DateTime>(
       isScrollControlled: true,
@@ -82,7 +76,8 @@ class _steps_tabState extends State<StepsTab> {
     List<DateTime> weekDays = [];
     DateTime firstDayOfThisWeek =
         today.subtract(Duration(days: today.weekday - 1));
-    DateTime lastDayOfThisWeek = firstDayOfThisWeek.add(const Duration(days: 6));
+    DateTime lastDayOfThisWeek =
+        firstDayOfThisWeek.add(const Duration(days: 6));
     for (var i = 0; i < 7; i++) {
       DateTime date = firstDayOfThisWeek.add(Duration(days: i));
       weekDays.add(date);
@@ -151,7 +146,9 @@ class _steps_tabState extends State<StepsTab> {
       ),
       //Total and Average
       <Widget>[
-        const Text("Total Steps This Week").fontSize(15).fontWeight(FontWeight.bold),
+        const Text("Total Steps This Week")
+            .fontSize(15)
+            .fontWeight(FontWeight.bold),
         Text(totalSteps()).fontSize(15).fontWeight(FontWeight.bold),
       ].toRow(
         crossAxisAlignment: CrossAxisAlignment.start,

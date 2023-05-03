@@ -81,7 +81,6 @@ class _sleep_tabState extends State<SleepTab> {
     List<DateTime> weekDays = [];
     DateTime firstDayOfThisWeek =
         today.subtract(Duration(days: today.weekday - 1));
-    DateTime lastDayOfThisWeek = firstDayOfThisWeek.add(const Duration(days: 6));
     for (var i = 0; i < 7; i++) {
       DateTime date = firstDayOfThisWeek.add(Duration(days: i));
       weekDays.add(date);
